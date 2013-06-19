@@ -1,7 +1,7 @@
 rpm-study
 =========
 
-new spec file
-#rpmdev-newspec %{PROGRAM NAME}
+1. new spec file
+    #rpmdev-newspec %{PROGRAM NAME}
 
 
