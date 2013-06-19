@@ -2,22 +2,21 @@ Name:           hello
 Version:        1.0.0 
 Release:        1%{?dist}
 Summary:        GaiaX RPM Hacks test code
-
 Group:          Gaiax Test
 License:        GPL License
-URL:            
-Source0:        hello-%{version}.tar.gz
+URL:            https://github.com/jojoagogogo/
+Source0:        %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Vender:		GaiaX co.,ltd.
+Vendor:         "GaiaX co.,ltd."
 
-BuildRequires:  
-Requires:       
+BuildRequires: glibc-devel  
+Requires:      glibc
 
 %description
 
 
 %prep
-%setup -q
+%setup -q -n hello-1.0.0
 
 
 %build
