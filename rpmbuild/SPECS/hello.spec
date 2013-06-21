@@ -6,21 +6,27 @@ Group:          Gaiax Test
 License:        GPL License
 URL:            https://github.com/jojoagogogo/
 Source0:        %{name}-%{version}.tar.gz
+Patch0:         %{name}.patch0
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Vendor:         "GaiaX co.,ltd."
 
 BuildRequires: glibc-devel  
 Requires:      glibc
 
-%description
+%bcond_with configure
 
+
+%description
+hello sample spec :)
 
 %prep
-%setup -q -n hello-1.0.0
-
+%setup -q 
+%patch0 -p0
 
 %build
+%if %{with configure}
 %configure
+%endif
 make %{?_smp_mflags}
 
 

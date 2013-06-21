@@ -1,0 +1,17 @@
+*** hello.c	2013-06-19 18:20:26.079523094 +0900
+--- hello_a.c	2013-06-21 10:09:12.092624881 +0900
+***************
+*** 2,7 ****
+  
+  int main(void)
+  {
+!     printf("hello, world!\n");	
+      return 0;
+  }
+--- 2,7 ----
+  
+  int main(void)
+  {
+!     printf("hello, rpm!\n");	
+      return 0;
+  }
