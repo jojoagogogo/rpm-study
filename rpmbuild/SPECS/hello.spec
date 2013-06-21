@@ -11,7 +11,7 @@ Patch0:         %{name}.patch0
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 Vendor:         "GaiaX co.,ltd."
 
-BuildRequires: glibc-devel  
+BuildRequires: autoconf automake
 Requires:      glibc
 
 Prefix: /usr/local/bin
