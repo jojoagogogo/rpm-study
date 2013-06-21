@@ -4,9 +4,9 @@
 AC_PREREQ([2.63])
 #AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
 AC_INIT(hello, 1.0.0, jojoagogogo@gmail.com)
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign 1.11])
 AC_CONFIG_SRCDIR([hello.c])
-AC_CONFIG_HEADERS([config.h])
+#AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CC
@@ -15,7 +15,7 @@ AC_PROG_INSTALL
 # Checks for libraries.
 
 # Checks for header files.
-AC_CHECK_HEADERS([stdio.h],[AC_DEFINE(HAVE_STDIO_H)],[AC_MSG_ERROR([Sorry, can't do anything for you])])
+#AC_CHECK_HEADERS([stdio.h],[AC_DEFINE(HAVE_STDIO_H)],[AC_MSG_ERROR([Sorry, can't do anything for you])])
 
 # Checks for typedefs, structures, and compiler characteristics.
 

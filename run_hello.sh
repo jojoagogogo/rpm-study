@@ -1,7 +1,12 @@
 VER=1.0.0
-cp -Rfv source/hello ./hello-${VER}
-tar zcvfp rpmbuild/SOURCES/hello-${VER}.tar.gz hello-${VER}
-cp -Rfv source/hello.patch0 rpmbuild/SOURCES
+
+for v in BUILD BUILDROOT RPMS SOURCES SRPMS
+do
+    rm -Rf rpmbuild/${v}/*
+done
+cp -Rf source/hello ./hello-${VER}
+tar zcfp rpmbuild/SOURCES/hello-${VER}.tar.gz hello-${VER}
+cp -Rf source/hello.patch0 rpmbuild/SOURCES
 rm -Rf hello-${VER}
 
 
