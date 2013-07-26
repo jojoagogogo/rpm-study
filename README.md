@@ -4,8 +4,8 @@ rpm-study
 
 1.必要なライブラリ入れていきます
 ================
-yum install screen tree emacs 
-
+#yum install screen tree emacs 
+yum install rpm-build make gcc autoconf automake 
 
 2.作業ディレクトリをつくります
 ================
