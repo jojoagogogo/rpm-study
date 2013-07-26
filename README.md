@@ -4,7 +4,6 @@ rpm-study
 
 1.必要なライブラリ入れていきます
 ================
-#yum install screen tree emacs 
 yum install rpm-build make gcc autoconf automake 
 
 2.作業ディレクトリをつくります
@@ -34,7 +33,7 @@ mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 ================
 SPECSフォルダにspecファイルを置きます
 
-cat ~/rpmbuild/SPECS/hello.spec 
+vi ~/rpmbuild/SPECS/hello.spec 
 <pre>
 Name:           hello
 Version:        1.0.0
@@ -134,9 +133,9 @@ tarballで固めたMakefile hello.cをつくります
 
 mkdir -p ~/source/hello-1.0.0
 
-cat source/hello-1.0.0/hello.c 
+vi source/hello-1.0.0/hello.c 
 <pre>
-#include <stdio.h>
+#include &lt;stdio.h&gt;
 
 int main(void)
 {
@@ -145,22 +144,22 @@ int main(void)
 }
 </pre>
 
-cat source/hello-1.0.0/Makefile
+vi source/hello-1.0.0/Makefile
 <pre>
-CC      =       gcc
-DEST    =       /usr/local/bin
-PROGRAM =       hello
+CC      =     gcc
+DEST    =     /usr/local/bin
+PROGRAM =     hello
 
 
-${PROGRAM}:     hello.c
-                gcc -o hello hello.c
+${PROGRAM}:   hello.c
+(tabにしてください)gcc -o hello hello.c
 
 
-install:        ${PROGRAM}
-                install -s ${PROGRAM} ${DEST}
+install:      ${PROGRAM}
+(tabにしてください)install -s ${PROGRAM} ${DEST}
 
 clean:
-                rm -f m.o *~ ${PROGRAM}
+(tabにしてください)rm -f m.o *~ ${PROGRAM}
 </pre>
 
 
@@ -174,7 +173,9 @@ tar zcfp ~/rpmbuild/SOURCES/hello-1.0.0.tar.gz hello-1.0.0
 5.Patchの作成、配置
 ================
 せっかくなんでパッチをおきます
-cat ~/source/hello.patch0
+
+vi ~/source/hello.patch0
+
 <pre>
 *** hello.c     2013-06-21 13:02:47.549514014 +0900
 --- hello_a.c   2013-06-21 13:20:59.529651126 +0900
@@ -194,7 +195,8 @@ cat ~/source/hello.patch0
       return 0;
   }
 </pre>
-cp ~/source/hello.patch0 ~rpmbuild/SOURCES
+
+cp ~/source/hello.patch0 ~/rpmbuild/SOURCES
 
 
 6.ディレクトリの確認
