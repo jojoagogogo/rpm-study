@@ -132,9 +132,9 @@ make install DEST=$RPM_BUILD_ROOT%{prefix}
 ================
 tarballで固めたMakefile hello.cをつくります
 
-mkdir -p ~/source/hello
+mkdir -p ~/source/hello-1.0.0
 
-cat source/hello/hello.c 
+cat source/hello-1.0.0/hello.c 
 <pre>
 #include <stdio.h>
 
@@ -145,7 +145,7 @@ int main(void)
 }
 </pre>
 
-cat source/hello/Makefile
+cat source/hello-1.0.0/Makefile
 <pre>
 CC      =       gcc
 DEST    =       /usr/local/bin
@@ -165,9 +165,10 @@ clean:
 
 
 固めます
+
 cd ~/source
-export VER=1.0.0
-tar zcfp ~rpmbuild/SOURCES/hello-${VER}.tar.gz hello-${VER}
+
+tar zcfp ~/rpmbuild/SOURCES/hello-1.0.0.tar.gz hello-1.0.0
 
 
 5.Patchの作成、配置
