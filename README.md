@@ -1,5 +1,98 @@
 rpm-study
-=========
+================
+
+
+1.必要なライブラリ入れていきます
+================
+yum install screen tree emacs 
+
+
+2.作業ディレクトリをつくります
+================
+
+<pre>
+通常 ~/rpmbuild ですが
+
+rpmの環境変数で変更可能です
+
+rpm --showrc で現在有効な変数が見れます
+rpm --showrc|grep _topdir
+</pre>
+<pre>
+マクロの設定を変更できるファイル
+       /usr/lib/rpm/macros
+       /etc/rpm/macros.*
+       ~/.rpmmacros
+       
+cat ~/.rpmmacros 
+%_topdir /tmp/rpmbuild
+</pre>
+
+mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+
+3.SPECファイルの作成
+================
+SPECSフォルダにspecファイルを置きます
+
+cat ~/rpmbuild/SPECS/hello.spec 
+<pre>
+Name:           hello
+Version:        1.0.0
+Release:        1%{?dist}
+Summary:        GaiaX RPM Hacks test code
+Group:          Gaiax Test
+License:        GPL License
+URL:            https://github.com/jojoagogogo/
+Source0:        %{name}-%{version}.tar.gz
+Patch0:         %{name}.patch0
+#BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root 
+Vendor:         "GaiaX co.,ltd."
+
+BuildRequires: autoconf automake
+Requires:      glibc
+
+Prefix: /usr/local/bin
+
+%description
+hello sample spec :)
+
+%prep
+%setup -q
+%patch0 -p0
+
+
+%build
+
+rm -rf $RPM_BUILD_ROOT
+%if %{with configure}
+%configure
+%endif
+make %{?_smp_mflags}
+
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT%{prefix}
+#make install DESTDIR=$RPM_BUILD_ROOT
+make install DEST=$RPM_BUILD_ROOT%{prefix}
+
+
+%clean
+#rm -rf $RPM_BUILD_ROOT
+
+
+%files
+%defattr(-,root,root,-)
+%doc
+%{prefix}/hello
+
+
+%changelog
+
+</pre>
+
+今回使っているSPECの変数です↓↓↓
 
 * spec
 
@@ -34,6 +127,99 @@ rpm-study
 |%clean|ゴミを削除|rm $RPM_BUILD_ROOT| * |
 |%files|インストールするファイルを記述|%{prefix}/hello||
 
+
+4.ソースファイルの作成
+================
+tarballで固めたMakefile hello.cをつくります
+
+mkdir -p ~/source/hello
+
+cat source/hello/hello.c 
+<pre>
+#include <stdio.h>
+
+int main(void)
+{
+    printf("hello, world!\n");  
+    return 0;
+}
+</pre>
+
+cat source/hello/Makefile
+<pre>
+CC      =       gcc
+DEST    =       /usr/local/bin
+PROGRAM =       hello
+
+
+${PROGRAM}:     hello.c
+                gcc -o hello hello.c
+
+
+install:        ${PROGRAM}
+                install -s ${PROGRAM} ${DEST}
+
+clean:
+                rm -f m.o *~ ${PROGRAM}
+</pre>
+
+
+固めます
+cd ~/source
+export VER=1.0.0
+tar zcfp ~rpmbuild/SOURCES/hello-${VER}.tar.gz hello-${VER}
+
+
+5.Patchの作成、配置
+================
+せっかくなんでパッチをおきます
+cat ~/source/hello.patch0
+<pre>
+*** hello.c     2013-06-21 13:02:47.549514014 +0900
+--- hello_a.c   2013-06-21 13:20:59.529651126 +0900
+***************
+*** 2,7 ****
+  
+  int main(void)
+  {
+!     printf("hello, world!\n");
+      return 0;
+  }
+--- 2,7 ----
+  
+  int main(void)
+  {
+!     printf("hello, RPM!\n");  
+      return 0;
+  }
+</pre>
+cp ~/source/hello.patch0 ~rpmbuild/SOURCES
+
+
+6.ディレクトリの確認
+================
+<pre>
+.
+├── BUILD
+├── BUILDROOT
+├── RPMS
+├── SOURCES
+│   ├── hello-1.0.0.tar.gz
+│   └── hello.patch0
+├── SPECS
+│   └── hello.spec
+└── SRPMS
+</pre>
+
+
+7.rpmbuildコマンド実行
+==================
+rpmbuild -ba ~/rpmbuild/SPECS/hello.spec
+
+rpmbuildコマンドの説明↓↓↓
+
+8.結果は・・・・・・・・
+==================
 
 
 
