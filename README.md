@@ -58,7 +58,8 @@ hello sample spec :)
 
 %prep
 %setup -q
-%patch0 -p0
+#%setup -q -n %{name}
+#%patch0 -p0
 
 
 %build
@@ -170,36 +171,8 @@ cd ~/source
 tar zcfp ~/rpmbuild/SOURCES/hello-1.0.0.tar.gz hello-1.0.0
 
 
-5.Patchの作成、配置
-================
-せっかくなんでパッチをおきます
 
-vi ~/source/hello.patch0
-
-<pre>
-*** hello.c     2013-06-21 13:02:47.549514014 +0900
---- hello_a.c   2013-06-21 13:20:59.529651126 +0900
-***************
-*** 2,7 ****
-  
-  int main(void)
-  {
-!     printf("hello, world!\n");
-      return 0;
-  }
---- 2,7 ----
-  
-  int main(void)
-  {
-!     printf("hello, RPM!\n");  
-      return 0;
-  }
-</pre>
-
-cp ~/source/hello.patch0 ~/rpmbuild/SOURCES
-
-
-6.ディレクトリの確認
+5.ディレクトリの確認
 ================
 <pre>
 .
@@ -215,14 +188,27 @@ cp ~/source/hello.patch0 ~/rpmbuild/SOURCES
 </pre>
 
 
-7.rpmbuildコマンド実行
+6.rpmbuildコマンド実行
 ==================
 rpmbuild -ba ~/rpmbuild/SPECS/hello.spec
 
 rpmbuildコマンドの説明↓↓↓
 
-8.結果は・・・・・・・・
+7.結果は・・・・・・・・
 ==================
+
+
+
+8.Patchの作成、配置
+================
+せっかくなんでパッチをつくります
+
+
+
+cp ~/source/hello.patch0 ~/rpmbuild/SOURCES
+
+
+
 
 
 
