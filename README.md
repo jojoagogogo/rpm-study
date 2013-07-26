@@ -43,7 +43,7 @@ Group:          Gaiax Test
 License:        GPL License
 URL:            https://github.com/jojoagogogo/
 Source0:        %{name}-%{version}.tar.gz
-Patch0:         %{name}.patch0
+#Patch0:         %{name}.patch0
 #BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root 
 Vendor:         "GaiaX co.,ltd."
@@ -134,7 +134,7 @@ tarballで固めたMakefile hello.cをつくります
 
 mkdir -p ~/source/hello-1.0.0
 
-vi source/hello-1.0.0/hello.c 
+vi ~/source/hello-1.0.0/hello.c 
 <pre>
 #include &lt;stdio.h&gt;
 
@@ -145,7 +145,7 @@ int main(void)
 }
 </pre>
 
-vi source/hello-1.0.0/Makefile
+vi ~/source/hello-1.0.0/Makefile
 <pre>
 CC      =     gcc
 DEST    =     /usr/local/bin
