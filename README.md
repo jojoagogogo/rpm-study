@@ -215,7 +215,28 @@ rpmbuildオプションの説明↓↓↓
 
 7.結果は・・・・・・・・
 ==================
-
+```
+├── rpmbuild
+│   ├── BUILD
+│   │   └── hello-1.0.0
+│   │       ├── Makefile
+│   │       ├── hello
+│   │       └── hello.c
+│   ├── BUILDROOT
+│   ├── RPMS
+│   │   └── x86_64
+│   │       └── hello-1.0.0-1.el6.x86_64.rpm
+│   ├── SOURCES
+│   │   └── hello-1.0.0.tar.gz
+│   ├── SPECS
+│   │   └── hello.spec
+│   └── SRPMS
+│       └── hello-1.0.0-1.el6.src.rpm
+└── source
+    └── hello-1.0.0
+        ├── Makefile
+        └── hello.c
+```
 
 
 8.Patchの作成、配置
@@ -260,13 +281,44 @@ patchをコピー
 9.SPECの修正
 ================
 パッチを適用するように修正
-<pre>
+```
+Release:        2%{?dist}
+
 Patch0:         %{name}.patch0
 
 %patch0 -p0
-</pre>
+```
 
 10.rpmをつくりなおしてみよう
+```
+├── rpmbuild
+│   ├── BUILD
+│   │   └── hello-1.0.0
+│   │       ├── Makefile
+│   │       ├── hello
+│   │       └── hello.c
+│   ├── BUILDROOT
+│   ├── RPMS
+│   │   └── x86_64
+│   │       ├── hello-1.0.0-1.el6.x86_64.rpm
+│   │       └── hello-1.0.0-2.el6.x86_64.rpm
+│   ├── SOURCES
+│   │   ├── hello-1.0.0.tar.gz
+│   │   └── hello.patch0
+│   ├── SPECS
+│   │   └── hello.spec
+│   └── SRPMS
+│       ├── hello-1.0.0-1.el6.src.rpm
+│       └── hello-1.0.0-2.el6.src.rpm
+└── source
+    ├── hello-1.0.0
+    │   ├── Makefile
+    │   ├── hello.c
+    │   └── hello_a.c
+    └── hello.patch0
+
+
+```
 
 ***rpmbuild -ba ~/rpmbuild/SPECS/hello.spec***
 
