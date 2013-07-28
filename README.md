@@ -9,15 +9,15 @@ yum install rpm-build make gcc autoconf automake
 2.作業ディレクトリをつくります
 ================
 
-<pre>
+```
 通常 ~/rpmbuild ですが
 
 rpmの環境変数で変更可能です
 
 rpm --showrc で現在有効な変数が見れます
 rpm --showrc|grep _topdir
-</pre>
-<pre>
+```
+```
 マクロの設定を変更できるファイル
        /usr/lib/rpm/macros
        /etc/rpm/macros.*
@@ -25,7 +25,7 @@ rpm --showrc|grep _topdir
        
 cat ~/.rpmmacros 
 %_topdir /tmp/rpmbuild
-</pre>
+```
 
 mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 
@@ -33,8 +33,9 @@ mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 ================
 SPECSフォルダにspecファイルを置きます
 
-vi ~/rpmbuild/SPECS/hello.spec 
-<pre>
+vi ~/rpmbuild/SPECS/hello.spec
+
+```
 Name:           hello
 Version:        1.0.0
 Release:        1%{?dist}
@@ -79,7 +80,7 @@ make install DEST=$RPM_BUILD_ROOT%{prefix}
 
 
 %clean
-#rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 
 %files
@@ -90,7 +91,8 @@ make install DEST=$RPM_BUILD_ROOT%{prefix}
 
 %changelog
 
-</pre>
+```
+
 
 今回使っているSPECの変数です↓↓↓
 
@@ -135,18 +137,23 @@ tarballで固めたMakefile hello.cをつくります
 mkdir -p ~/source/hello-1.0.0
 
 vi ~/source/hello-1.0.0/hello.c 
-<pre>
-#include &lt;stdio.h&gt;
+
+
+```
+#include <stdio.h>;
 
 int main(void)
 {
     printf("hello, world!\n");  
     return 0;
 }
-</pre>
+```
+
 
 vi ~/source/hello-1.0.0/Makefile
-<pre>
+
+```
+
 CC      =     gcc
 DEST    =     /usr/local/bin
 PROGRAM =     hello
@@ -161,7 +168,8 @@ install:      ${PROGRAM}
 
 clean:
 (tabにしてください)rm -f m.o *~ ${PROGRAM}
-</pre>
+
+```
 
 
 固めます
@@ -174,7 +182,7 @@ tar zcfp ~/rpmbuild/SOURCES/hello-1.0.0.tar.gz hello-1.0.0
 
 5.ディレクトリの確認
 ================
-<pre>
+```
 .
 ├── BUILD
 ├── BUILDROOT
@@ -185,7 +193,7 @@ tar zcfp ~/rpmbuild/SOURCES/hello-1.0.0.tar.gz hello-1.0.0
 ├── SPECS
 │   └── hello.spec
 └── SRPMS
-</pre>
+```
 
 
 6.rpmbuildコマンド実行
@@ -203,11 +211,52 @@ rpmbuildコマンドの説明↓↓↓
 ================
 せっかくなんでパッチをつくります
 
+cd ~/source/hello-1.0.0/
 
+sed s/world/RPM/g hello.c > hello_a.c
+
+diff -rNc hello.c hello_a.c > ~/source/hello.patch0
+
+cat ~/source/hello.patch0
+
+```
+*** hello.c     2013-07-26 20:10:48.340124666 +0900
+--- hello_a.c   2013-07-28 11:50:39.961138071 +0900
+***************
+*** 2,8 ****
+  
+  int main(void)
+  {
+!     printf("hello, world!\n");  
+      return 0;
+  }
+  
+--- 2,8 ----
+  
+  int main(void)
+  {
+!     printf("hello, RPM!\n");  
+      return 0;
+  }
+  
+```
+
+patchをコピー
 
 cp ~/source/hello.patch0 ~/rpmbuild/SOURCES
 
 
+9.SPECの修正
+================
+パッチを適用するように修正
+<pre>
+Patch0:         %{name}.patch0
+
+%patch0 -p0
+</pre>
+
+10.rpmをつくりなおしてみよう
+rpmbuild -ba ~/rpmbuild/SPECS/hello.spec
 
 
 
