@@ -4,36 +4,37 @@ rpm-study
 
 1.必要なライブラリ入れていきます
 ================
-yum install rpm-build make gcc autoconf automake 
+***yum install rpm-build make gcc autoconf automake***
 
 2.作業ディレクトリをつくります
 ================
 
-```
 通常 ~/rpmbuild ですが
 
 rpmの環境変数で変更可能です
 
 rpm --showrc で現在有効な変数が見れます
-rpm --showrc|grep _topdir
-```
-```
+**rpm --showrc|grep _topdir**
+
+
+
 マクロの設定を変更できるファイル
+```
        /usr/lib/rpm/macros
        /etc/rpm/macros.*
        ~/.rpmmacros
-       
-cat ~/.rpmmacros 
-%_topdir /tmp/rpmbuild
 ```
 
-mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+cat ~/.rpmmacros 
+%_topdir /tmp/rpmbuild
+
+***mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}***
 
 3.SPECファイルの作成
 ================
 SPECSフォルダにspecファイルを置きます
 
-vi ~/rpmbuild/SPECS/hello.spec
+***vi ~/rpmbuild/SPECS/hello.spec***
 
 ```
 Name:           hello
@@ -134,9 +135,9 @@ rm -rf $RPM_BUILD_ROOT
 ================
 tarballで固めたMakefile hello.cをつくります
 
-mkdir -p ~/source/hello-1.0.0
+***mkdir -p ~/source/hello-1.0.0***
 
-vi ~/source/hello-1.0.0/hello.c 
+***vi ~/source/hello-1.0.0/hello.c***
 
 
 ```
@@ -150,7 +151,7 @@ int main(void)
 ```
 
 
-vi ~/source/hello-1.0.0/Makefile
+***vi ~/source/hello-1.0.0/Makefile***
 
 ```
 
@@ -174,9 +175,9 @@ clean:
 
 固めます
 
-cd ~/source
+***cd ~/source***
 
-tar zcfp ~/rpmbuild/SOURCES/hello-1.0.0.tar.gz hello-1.0.0
+***tar zcfp ~/rpmbuild/SOURCES/hello-1.0.0.tar.gz hello-1.0.0***
 
 
 
@@ -198,9 +199,19 @@ tar zcfp ~/rpmbuild/SOURCES/hello-1.0.0.tar.gz hello-1.0.0
 
 6.rpmbuildコマンド実行
 ==================
-rpmbuild -ba ~/rpmbuild/SPECS/hello.spec
+***rpmbuild -ba ~/rpmbuild/SPECS/hello.spec***
 
-rpmbuildコマンドの説明↓↓↓
+rpmbuildオプションの説明↓↓↓
+
+```
+-ba  バイナリパッケージとソースパッケージの作成
+-bp  ソースの展開とパッチ当てまで
+-bc  makeまで
+-bi  インストールまで
+-bb  バイナリパッケージの作成
+-bs  ソースパッケージの作成
+```
+
 
 7.結果は・・・・・・・・
 ==================
@@ -211,13 +222,13 @@ rpmbuildコマンドの説明↓↓↓
 ================
 せっかくなんでパッチをつくります
 
-cd ~/source/hello-1.0.0/
+***cd ~/source/hello-1.0.0/***
 
-sed s/world/RPM/g hello.c > hello_a.c
+***sed s/world/RPM/g hello.c > hello_a.c***
 
-diff -rNc hello.c hello_a.c > ~/source/hello.patch0
+***diff -rNc hello.c hello_a.c > ~/source/hello.patch0***
 
-cat ~/source/hello.patch0
+***cat ~/source/hello.patch0***
 
 ```
 *** hello.c     2013-07-26 20:10:48.340124666 +0900
@@ -243,7 +254,7 @@ cat ~/source/hello.patch0
 
 patchをコピー
 
-cp ~/source/hello.patch0 ~/rpmbuild/SOURCES
+***cp ~/source/hello.patch0 ~/rpmbuild/SOURCES***
 
 
 9.SPECの修正
@@ -256,7 +267,8 @@ Patch0:         %{name}.patch0
 </pre>
 
 10.rpmをつくりなおしてみよう
-rpmbuild -ba ~/rpmbuild/SPECS/hello.spec
+
+***rpmbuild -ba ~/rpmbuild/SPECS/hello.spec***
 
 
 
