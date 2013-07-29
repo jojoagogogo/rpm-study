@@ -370,7 +370,10 @@ src.rpmを使ってみよう
 rpm -ivh 1.0.0-2.el6.src.rpm
 ```
 
+12.パッケージのspecファイルを読んでみよう
+==================
 
+https://github.com/jojoagogogo/rpm-study/tree/master/SPECS
 
 <!--
 1. new spec file
