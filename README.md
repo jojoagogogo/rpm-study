@@ -319,6 +319,8 @@ Patch0:         %{name}.patch0
 ```
 
 10.rpmをつくりなおしてみよう
+================
+
 ```
 ├── rpmbuild
 │   ├── BUILD
@@ -351,7 +353,8 @@ Patch0:         %{name}.patch0
 
 ***rpmbuild -ba ~/rpmbuild/SPECS/hello.spec***
 
-11.Tips
+11.他にもいろいろ
+================
 
 ```
 雛形とか作ってくれる
