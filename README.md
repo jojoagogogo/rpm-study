@@ -26,6 +26,7 @@ specファイルは、宣言部と実行部に分かれている。宣言部に�
 
 2.作業ディレクトリをつくります
 ================
+ここからは一般ユーザで行ってください
 
 通常 ~/rpmbuild ですが
 
@@ -50,10 +51,10 @@ cat ~/.rpmmacros
 
 ```
 BUILD      作業ディレクトリ
-RPMS	    RPMファイルを保存するディレクトリ．アーキテクチャ別にサブディレクトリがわかれる．
-SRPMS	    SRPMファイルを保存するディレクトリ．
+RPMS       RPMファイルを保存するディレクトリ．アーキテクチャ別にサブディレクトリがわかれる．
+SRPMS      SRPMファイルを保存するディレクトリ．
 SOURCES    ビルドに必要なソースファイル・パッチファイルを配置するディレクトリ．
-SPECS	    ビルドに必要なSPECファイルを配置するディレクトリ．
+SPECS      ビルドに必要なSPECファイルを配置するディレクトリ．
 ```
 
 
@@ -350,7 +351,21 @@ Patch0:         %{name}.patch0
 
 ***rpmbuild -ba ~/rpmbuild/SPECS/hello.spec***
 
+11.Tips
 
+```
+雛形とか作ってくれる
+
+yum install rpmdevtools
+
+rpmdev-setuptree とか
+rpmdev-*
+```
+
+```
+src.rpmを使ってみよう
+rpm -ivh 1.0.0-2.el6.src.rpm
+```
 
 
 
