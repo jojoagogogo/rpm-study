@@ -173,7 +173,7 @@ tarballで固めたMakefile hello.cをつくります
 
 
 ```
-#include <stdio.h>;
+#include <stdio.h>
 
 int main(void)
 {
