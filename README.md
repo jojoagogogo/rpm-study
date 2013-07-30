@@ -1,3 +1,6 @@
+https://github.com/jojoagogogo/rpm-study/
+================
+
 RPMの作り方
 ================
 
